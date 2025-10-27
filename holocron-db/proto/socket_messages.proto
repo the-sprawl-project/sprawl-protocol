@@ -1,0 +1,88 @@
+syntax = "proto3";
+package socket_messages;
+
+message KeyValuePair {
+  string key = 1;
+  string value = 2;
+}
+
+enum ReqType {
+  PING = 0;
+  CREATE = 1;
+  READ = 2;
+  UPDATE = 3;
+  DELETE = 4;
+  BACKUP = 5;
+  RESTORE = 6;
+}
+
+message GenericRequest {
+  ReqType req_type = 1;
+  bytes payload = 2;
+}
+
+message GenericResponse {
+  ReqType req_type = 1;
+  bytes payload = 2;
+}
+
+message PingRequest {
+  string ping_message = 1;
+}
+
+message PingResponse {
+  string ping_resp_message = 1;
+}
+
+message CreateKVPairReq {
+  KeyValuePair pair = 1;
+}
+
+message BackupReq {
+  string backup_id = 1;
+}
+
+message RestoreReq {
+  string backup_id = 1;
+}
+
+message CreateKVPairResp {
+  // Returns true if creating the key-value pair was successful.
+  // If the key-value pair already exists, returns false.
+  bool success = 1;
+}
+
+message ReadKVPairReq {
+  string key = 1;
+}
+
+message ReadKVPairResp {
+  // Success indicates whether the key was found in the store
+  bool success = 1;
+  // The pair is the actual KV pair if the key was found
+  KeyValuePair pair = 2;
+}
+
+message UpdateKVPairReq {
+  KeyValuePair pair = 1;
+}
+
+message UpdateKVPairResp {
+  bool success = 1;
+}
+
+message DeleteKVPairReq {
+  string key = 1;
+}
+
+message DeleteKVPairResp {
+  bool success = 1;
+}
+
+message BackupResp {
+  bool success = 1;
+}
+
+message RestoreResp {
+  bool success = 1;
+}

@@ -1,0 +1,7 @@
+syntax = "proto3";
+package key_value_store;
+
+message KeyValueStoreMsg {
+  string name = 1;
+  map<string, string> values = 2;
+}
